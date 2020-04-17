@@ -32,6 +32,8 @@ typedef struct		s_info
 }					t_info;
 
 
+void	def_stacks(t_stack *stack_a, t_stack *stack_b, int argc, char **argv);
+void	def_info(t_info *info, int argc);
 void	put_stacks(t_stack *stack_a, t_stack *stack_b, t_info *info);
 void	onestack_sort(t_stack *stack_a, t_stack *stack_b, t_info *info);
 void	fill_stack_b(t_stack *stack_a, t_stack *stack_b, t_info *info);
