@@ -23,25 +23,161 @@ int		main(int argc, char **argv)
 		printf("Need input arguments for stacks\n");
 		return (0);
 	}
+
+
 	def_stacks(&stack_a, &stack_b, argc, argv);
 	def_info(&info, argc);
 	put_stacks(&stack_a, &stack_b, &info);
 
+	// manual_input(&stack_a, &stack_b, &info);
+
 	if (stack_a.top < 4)
 	{
-		onestack_sort(&stack_a, &stack_b, &info);
+		sortup_a(&stack_a, &stack_b, &info);
 		return (0);
 	}
+	def_threemin(&stack_a, &info);
+
+	// while (stack_a.top != 3)
+	// {
+	// 	fill_stack_b(&stack_a, &stack_b, &info);
+	// }
+	// sortup_a(&stack_a, &stack_b, &info);
+	// while (stack_b.top)
+	// {
+	// 	push_a(&stack_a, &stack_b, &info);
+	// }
+
 	while (stack_a.top != 3)
 	{
-		fill_stack_b(&stack_a, &stack_b, &info);
-	}
-	onestack_sort(&stack_a, &stack_b, &info);
-	while (stack_b.top)
-	{
-		push_a(&stack_a, &stack_b, &info);
+		if (stack_a.data[stack_a.top - 1] != info.threemin[0] &&
+			stack_a.data[stack_a.top - 1] != info.threemin[1] &&
+			stack_a.data[stack_a.top - 1] != info.threemin[2])
+		{
+			push_b(&stack_a, &stack_b, &info);
+
+			if (stack_b.top == 1)
+				continue ;
+			if (stack_b.top == 2)
+			{
+				if (stack_b.data[0] < stack_b.data[1])
+				{
+					swap_b(&stack_a, &stack_b, &info); // rot_b rotr_b
+					continue ;
+				}
+				continue ;
+			}
+			if (stack_b.top == 3)
+			{
+				def_maxb(&stack_b, &info);
+				if (info.ind_maxb == stack_b.top - 1)
+				{
+					rot_b(&stack_a, &stack_b, &info);
+					continue ;
+				}
+				if (stack_b.data[1] < stack_b.data[2])
+				{
+					swap_b(&stack_a, &stack_b, &info);
+					continue ;
+				}
+			}
+			if (stack_b.top > 3)
+			{
+				def_maxb(&stack_b, &info);
+				// if (info.ind_maxb == stack_b.top - 1)
+				// {
+				// 	rot_b(&stack_a, &stack_b, &info);
+				// 	continue ;
+				// }
+
+				// rotr_b(&stack_a, &stack_b, &info);
+				// push_a(&stack_a, &stack_b, &info);
+				while (info.ind_maxb != stack_b.top - 1)
+				{
+					rotr_b(&stack_a, &stack_b, &info);
+					push_a(&stack_a, &stack_b, &info);
+					def_maxb(&stack_b, &info);
+				}
+				rot_b(&stack_a, &stack_b, &info);
+				continue ;
+			}
+		}
+		rot_a(&stack_a, &stack_b, &info);
 	}
 	return (0);
+}
+
+void	def_maxb(t_stack *stack_b, t_info *info)
+{
+	int		i;
+	
+	info->ind_maxb = 0;
+	info->val_maxb = stack_b->data[0];
+	i = 1;
+	while (i < stack_b->top)
+	{
+		if (info->val_maxb < stack_b->data[i])
+		{
+			info->ind_maxb = i;
+			info->val_maxb = stack_b->data[i];
+		}
+		i += 1;
+	}
+}
+
+void	def_threemin(t_stack *stack_a, t_info *info)
+{
+	int		i;
+	
+	info->threemin[0] = stack_a->data[0];
+	i = 1;
+	while (i < 3)
+	{
+		if (stack_a->data[i] < info->threemin[0])
+		{
+			info->threemin[2] = info->threemin[1];
+			info->threemin[1] = info->threemin[0];
+			info->threemin[0] = stack_a->data[i];
+			i += 1;
+			continue ;
+		}
+		if (stack_a->data[i] < info->threemin[1])
+		{
+			info->threemin[2] = info->threemin[1];
+			info->threemin[1] = stack_a->data[i];
+			i += 1;
+			continue ;
+		}
+		info->threemin[i] = stack_a->data[i];
+		i += 1;
+	}
+	
+	i = 3;
+	while (i < stack_a->top)
+	{
+		if (stack_a->data[i] < info->threemin[0])
+		{
+			info->threemin[2] = info->threemin[1];
+			info->threemin[1] = info->threemin[0];
+			info->threemin[0] = stack_a->data[i];
+			i += 1;
+			continue ;
+		}
+		if (stack_a->data[i] < info->threemin[1])
+		{
+			info->threemin[2] = info->threemin[1];
+			info->threemin[1] = stack_a->data[i];
+			i += 1;
+			continue ;
+		}
+		if (stack_a->data[i] < info->threemin[2])
+		{
+			info->threemin[2] = stack_a->data[i];
+			i += 1;
+			continue ;
+		}
+		i += 1;
+	}
 }
 
 void	def_stacks(t_stack *stack_a, t_stack *stack_b, int argc, char **argv)
@@ -120,7 +256,7 @@ void	fill_stack_b(t_stack *stack_a, t_stack *stack_b, t_info *info)
 	push_b(stack_a, stack_b, info);
 }
 
-void	onestack_sort(t_stack *stack_a, t_stack *stack_b, t_info *info)
+void	sortup_a(t_stack *stack_a, t_stack *stack_b, t_info *info)
 {
 	int		i;
 	int		min_val;

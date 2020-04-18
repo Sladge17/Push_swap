@@ -29,13 +29,18 @@ typedef struct		s_info
 	int				argc;
 	int				count;
 	char			*action;
+	int				threemin[3];
+	int				ind_maxb;
+	int				val_maxb;
 }					t_info;
 
 
 void	def_stacks(t_stack *stack_a, t_stack *stack_b, int argc, char **argv);
 void	def_info(t_info *info, int argc);
 void	put_stacks(t_stack *stack_a, t_stack *stack_b, t_info *info);
-void	onestack_sort(t_stack *stack_a, t_stack *stack_b, t_info *info);
+void	sortup_a(t_stack *stack_a, t_stack *stack_b, t_info *info);
+void	def_threemin(t_stack *stack_a, t_info *info);
+void	def_maxb(t_stack *stack_b, t_info *info);
 void	fill_stack_b(t_stack *stack_a, t_stack *stack_b, t_info *info);
 
 /*
@@ -56,6 +61,6 @@ void	rotr_ab(t_stack *stack_a, t_stack *stack_b, t_info *info);
 /*
 ** manual_input.c
 */
-void	manual_input(int argc, t_stack *stack_a, t_stack *stack_b, int *count);
+void	manual_input(t_stack *stack_a, t_stack *stack_b, t_info *info);
 
 #endif

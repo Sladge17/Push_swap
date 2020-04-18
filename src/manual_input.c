@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	manual_input(int argc, t_stack *stack_a, t_stack *stack_b, int *count)
+void	manual_input(t_stack *stack_a, t_stack *stack_b, t_info *info)
 {
 	char		input[3];
 	
@@ -23,62 +23,62 @@ void	manual_input(int argc, t_stack *stack_a, t_stack *stack_b, int *count)
 			break ;
 		if (!strcmp(input, "sa"))
 		{
-			swap_a(argc, stack_a, stack_b, count);
+			swap_a(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "sb"))
 		{
-			swap_b(argc, stack_a, stack_b, count);
+			swap_b(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "ss"))
 		{
-			swap_ab(argc, stack_a, stack_b, count);
+			swap_ab(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "pa"))
 		{
-			push_a(argc, stack_a, stack_b, count);
+			push_a(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "pb"))
 		{
-			push_b(argc, stack_a, stack_b, count);
+			push_b(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "pb"))
 		{
-			push_b(argc, stack_a, stack_b, count);
+			push_b(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "ra"))
 		{
-			rot_a(argc, stack_a, stack_b, count);
+			rot_a(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "rb"))
 		{
-			rot_b(argc, stack_a, stack_b, count);
+			rot_b(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "rr"))
 		{
-			rot_ab(argc, stack_a, stack_b, count);
+			rot_ab(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "rra"))
 		{
-			rotr_a(argc, stack_a, stack_b, count);
+			rotr_a(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "rrb"))
 		{
-			rotr_b(argc, stack_a, stack_b, count);
+			rotr_b(stack_a, stack_b, info);
 			continue ;
 		}
 		if (!strcmp(input, "rrr"))
 		{
-			rotr_ab(argc, stack_a, stack_b, count);
+			rotr_ab(stack_a, stack_b, info);
 			continue ;
 		}
 		printf("Unknown command\n");

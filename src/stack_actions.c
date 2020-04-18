@@ -120,7 +120,7 @@ void	rot_b(t_stack *stack_a, t_stack *stack_b, t_info *info)
 	if (stack_b->top < 2)
 		return ;
 	tmp = stack_b->data[stack_b->top - 1];
-	i = stack_a->top - 1;
+	i = stack_b->top - 1;
 	while (i > 0)
 	{
 		stack_b->data[i] = stack_b->data[i - 1];
@@ -154,7 +154,7 @@ void	rot_ab(t_stack *stack_a, t_stack *stack_b, t_info *info)
 	if (stack_b->top > 1)
 	{
 		tmp = stack_b->data[stack_b->top - 1];
-		i = stack_a->top - 1;
+		i = stack_b->top - 1;
 		while (i > 0)
 		{
 			stack_b->data[i] = stack_b->data[i - 1];
@@ -175,6 +175,9 @@ void	rotr_a(t_stack *stack_a, t_stack *stack_b, t_info *info)
 {
 	int		tmp;
 	int		i;
+
+	int		tmp2 = stack_b->top;
+	tmp2 = tmp2 + 1;
 	
 	if (stack_a->top < 2)
 		return ;
