@@ -31,7 +31,7 @@ typedef struct		s_info
 	char			*action;
 	int				threemin[3];
 	int				ind_maxb;
-	int				val_maxb;
+	int				ind_minb[2];
 }					t_info;
 
 
@@ -40,7 +40,10 @@ void	def_info(t_info *info, int argc);
 void	put_stacks(t_stack *stack_a, t_stack *stack_b, t_info *info);
 void	sortup_a(t_stack *stack_a, t_stack *stack_b, t_info *info);
 void	def_threemin(t_stack *stack_a, t_info *info);
-void	def_maxb(t_stack *stack_b, t_info *info);
+
+void	def_index_maxb(t_stack *stack_b, t_info *info);
+void	def_index_minb(t_stack *stack_b, t_info *info);
+
 void	fill_stack_b(t_stack *stack_a, t_stack *stack_b, t_info *info);
 
 /*

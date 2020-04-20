@@ -69,7 +69,7 @@ int		main(int argc, char **argv)
 			}
 			if (stack_b.top == 3)
 			{
-				def_maxb(&stack_b, &info);
+				def_index_maxb(&stack_b, &info);
 				if (info.ind_maxb == stack_b.top - 1)
 				{
 					rot_b(&stack_a, &stack_b, &info);
@@ -83,7 +83,17 @@ int		main(int argc, char **argv)
 			}
 			if (stack_b.top > 3)
 			{
-				def_maxb(&stack_b, &info);
+				def_index_minb(&stack_b, &info);
+				if (info.ind_minb[0] == stack_b.top - 1)
+					continue ;
+				if (info.ind_minb[1] == stack_b.top - 1)
+				{
+					swap_b(&stack_a, &stack_b, &info);
+					continue ;
+				}
+				
+				
+				def_index_maxb(&stack_b, &info);
 				// if (info.ind_maxb == stack_b.top - 1)
 				// {
 				// 	rot_b(&stack_a, &stack_b, &info);
@@ -96,7 +106,7 @@ int		main(int argc, char **argv)
 				{
 					rotr_b(&stack_a, &stack_b, &info);
 					push_a(&stack_a, &stack_b, &info);
-					def_maxb(&stack_b, &info);
+					def_index_maxb(&stack_b, &info);
 				}
 				rot_b(&stack_a, &stack_b, &info);
 				continue ;
@@ -107,23 +117,59 @@ int		main(int argc, char **argv)
 	return (0);
 }
 
-void	def_maxb(t_stack *stack_b, t_info *info)
+void	def_index_maxb(t_stack *stack_b, t_info *info)
 {
 	int		i;
 	
 	info->ind_maxb = 0;
-	info->val_maxb = stack_b->data[0];
 	i = 1;
 	while (i < stack_b->top)
 	{
-		if (info->val_maxb < stack_b->data[i])
-		{
+		if (stack_b->data[i] > stack_b->data[info->ind_maxb])
 			info->ind_maxb = i;
-			info->val_maxb = stack_b->data[i];
+		i += 1;
+	}
+}
+
+void	def_index_minb(t_stack *stack_b, t_info *info)
+{
+	int		i;
+	
+	if (stack_b->data[stack_b->top - 1] < stack_b->data[stack_b->top - 2])
+	{
+		info->ind_minb[0] = 0;
+		info->ind_minb[1] = 1;
+	}
+	else
+	{
+		info->ind_minb[0] = 1;
+		info->ind_minb[1] = 0;
+	}
+	
+	
+	// info->ind_minb[0] = 0;
+	i = 2;
+	while (i < stack_b->top)
+	{
+		if (stack_b->data[i] < stack_b->data[info->ind_minb[0]])
+		{
+			info->ind_minb[1] = info->ind_minb[0];
+			info->ind_minb[0] = i;
+			i += 1;
+			continue ;
+		}
+		if (stack_b->data[i] < stack_b->data[info->ind_minb[1]])
+		{
+			info->ind_minb[1] = i;
+			i += 1;
+			continue ;
 		}
 		i += 1;
 	}
 }
+
+
+
 
 void	def_threemin(t_stack *stack_a, t_info *info)
 {
