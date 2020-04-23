@@ -23,20 +23,40 @@ int		main(int argc, char **argv)
 		printf("Need input arguments for stacks\n");
 		return (0);
 	}
-
-
 	def_stacks(&stack_a, &stack_b, argc, argv);
 	def_info(&info, argc);
 	put_stacks(&stack_a, &stack_b, &info);
 
-	// manual_input(&stack_a, &stack_b, &info);
-
-	if (stack_a.top < 4)
+	// if (stack_a.top == 5)
+	// {
+	// 	sort_a_5memb(&stack_a, &stack_b, &info);
+	// 	exit(0);
+	// }
+	if (stack_a.top == 4)
 	{
-		sortup_a(&stack_a, &stack_b, &info);
-		return (0);
+		sort_a_4memb(&stack_a, &stack_b, &info);
+		exit(0);
 	}
-	def_threemin(&stack_a, &info);
+	if (stack_a.top == 3)
+	{
+		sort_a_3memb(&stack_a, &stack_b, &info);
+		exit(0);
+	}
+	if (stack_a.top == 2)
+	{
+		sort_a_2memb(&stack_a, &stack_b, &info);
+		exit(0);
+	}
+	sort_a_1memb(&stack_a);
+
+	// if (stack_a.top < 4)
+	// {
+	// 	sortup_a(&stack_a, &stack_b, &info);
+	// 	return (0);
+	// }
+	// def_threemin(&stack_a, &info);
+
+	// def_median(&stack_a, &info);
 
 	// while (stack_a.top != 3)
 	// {
@@ -48,74 +68,214 @@ int		main(int argc, char **argv)
 	// 	push_a(&stack_a, &stack_b, &info);
 	// }
 
-	while (stack_a.top != 3)
+	// while (stack_a.top != 3)
+	// {
+	// 	if (stack_a.data[stack_a.top - 1] != info.threemin[0] &&
+	// 		stack_a.data[stack_a.top - 1] != info.threemin[1] &&
+	// 		stack_a.data[stack_a.top - 1] != info.threemin[2])
+	// 	{
+	// 		push_b(&stack_a, &stack_b, &info);
+
+	// 		if (stack_b.top == 1)
+	// 			continue ;
+	// 		if (stack_b.top == 2)
+	// 		{
+	// 			if (stack_b.data[0] < stack_b.data[1])
+	// 			{
+	// 				swap_b(&stack_a, &stack_b, &info); // rot_b rotr_b
+	// 				continue ;
+	// 			}
+	// 			continue ;
+	// 		}
+	// 		if (stack_b.top == 3)
+	// 		{
+	// 			def_index_maxb(&stack_b, &info);
+	// 			if (info.ind_maxb == stack_b.top - 1)
+	// 			{
+	// 				rot_b(&stack_a, &stack_b, &info);
+	// 				continue ;
+	// 			}
+	// 			if (stack_b.data[1] < stack_b.data[2])
+	// 			{
+	// 				swap_b(&stack_a, &stack_b, &info);
+	// 				continue ;
+	// 			}
+	// 		}
+	// 		if (stack_b.top > 3)
+	// 		{
+	// 			def_index_minb(&stack_b, &info);
+	// 			if (info.ind_minb[0] == stack_b.top - 1)
+	// 				continue ;
+	// 			if (info.ind_minb[1] == stack_b.top - 1)
+	// 			{
+	// 				swap_b(&stack_a, &stack_b, &info);
+	// 				continue ;
+	// 			}
+	// 			def_index_maxb(&stack_b, &info);
+	// 			if (info.ind_maxb == stack_b.top - 1)
+	// 			{
+	// 				rot_b(&stack_a, &stack_b, &info);
+	// 				continue ;
+	// 			}
+
+	// 			while (info.ind_minb[0] != stack_b.top - 1)
+	// 			{
+	// 				swap_b(&stack_a, &stack_b, &info);
+					
+	// 				def_index_minb(&stack_b, &info);
+	// 				if (info.ind_minb[1] == stack_b.top - 2)
+	// 					break ;
+
+	// 				push_a(&stack_a, &stack_b, &info);
+	// 				def_index_minb(&stack_b, &info);
+	// 			}
+	// 			continue ;
+
+	// 			// while (info.ind_maxb != stack_b.top - 1)
+	// 			// {
+	// 			// 	rotr_b(&stack_a, &stack_b, &info);
+	// 			// 	push_a(&stack_a, &stack_b, &info);
+	// 			// 	def_index_maxb(&stack_b, &info);
+	// 			// }
+	// 			// rot_b(&stack_a, &stack_b, &info);
+	// 			// continue ;
+	// 		}
+	// 	}
+	// 	rot_a(&stack_a, &stack_b, &info);
+	// }
+	// return (0);
+
+	info.flag = 1;
+	info.filllevel = 0;
+	
+	while (stack_a.top > 4)
 	{
-		if (stack_a.data[stack_a.top - 1] != info.threemin[0] &&
-			stack_a.data[stack_a.top - 1] != info.threemin[1] &&
-			stack_a.data[stack_a.top - 1] != info.threemin[2])
+		def_median(&stack_a, &info);
+		info.filllevel += stack_a.top / 2;
+		while (stack_b.top < info.filllevel)
 		{
-			push_b(&stack_a, &stack_b, &info);
-
-			if (stack_b.top == 1)
-				continue ;
-			if (stack_b.top == 2)
+			if (stack_a.data[stack_a.top - 1] > info.median)
 			{
-				if (stack_b.data[0] < stack_b.data[1])
+				push_b(&stack_a, &stack_b, &info);
+				if (stack_b.top == 1)
+					continue ;
+				if (stack_b.top == 2)
 				{
-					swap_b(&stack_a, &stack_b, &info); // rot_b rotr_b
+					if (stack_b.data[0] < stack_b.data[1])
+					{
+						swap_b(&stack_a, &stack_b, &info); // rot_b rotr_b
+						continue ;
+					}
 					continue ;
 				}
-				continue ;
-			}
-			if (stack_b.top == 3)
-			{
-				def_index_maxb(&stack_b, &info);
-				if (info.ind_maxb == stack_b.top - 1)
+				if (stack_b.top == 3)
 				{
-					rot_b(&stack_a, &stack_b, &info);
-					continue ;
-				}
-				if (stack_b.data[1] < stack_b.data[2])
-				{
-					swap_b(&stack_a, &stack_b, &info);
-					continue ;
-				}
-			}
-			if (stack_b.top > 3)
-			{
-				def_index_minb(&stack_b, &info);
-				if (info.ind_minb[0] == stack_b.top - 1)
-					continue ;
-				if (info.ind_minb[1] == stack_b.top - 1)
-				{
-					swap_b(&stack_a, &stack_b, &info);
-					continue ;
-				}
-				
-				
-				def_index_maxb(&stack_b, &info);
-				// if (info.ind_maxb == stack_b.top - 1)
-				// {
-				// 	rot_b(&stack_a, &stack_b, &info);
-				// 	continue ;
-				// }
-
-				// rotr_b(&stack_a, &stack_b, &info);
-				// push_a(&stack_a, &stack_b, &info);
-				while (info.ind_maxb != stack_b.top - 1)
-				{
-					rotr_b(&stack_a, &stack_b, &info);
-					push_a(&stack_a, &stack_b, &info);
 					def_index_maxb(&stack_b, &info);
+					if (info.ind_maxb == stack_b.top - 1 && info.flag)
+					{
+						rot_b(&stack_a, &stack_b, &info);
+						continue ;
+					}
+					if (stack_b.data[1] < stack_b.data[2])
+					{
+						swap_b(&stack_a, &stack_b, &info);
+						continue ;
+					}
 				}
-				rot_b(&stack_a, &stack_b, &info);
-				continue ;
+				// if (stack_b.top > 3)
+				// {
+					def_index_minb(&stack_b, &info);
+					if (info.ind_minb[0] == stack_b.top - 1)
+						continue ;
+					if (info.ind_minb[1] == stack_b.top - 1)
+					{
+						swap_b(&stack_a, &stack_b, &info);
+						continue ;
+					}
+					def_index_maxb(&stack_b, &info);
+					if (info.ind_maxb == stack_b.top - 1 && info.flag)
+					{
+						rot_b(&stack_a, &stack_b, &info);
+						continue ;
+					}
+
+					while (info.ind_minb[0] != stack_b.top - 1)
+					{
+						swap_b(&stack_a, &stack_b, &info);
+						
+						def_index_minb(&stack_b, &info);
+						if (info.ind_minb[1] == stack_b.top - 2)
+							break ;
+						push_a(&stack_a, &stack_b, &info);
+						def_index_minb(&stack_b, &info);
+					}
+					continue ;
+				// }
 			}
+			rot_a(&stack_a, &stack_b, &info);
 		}
-		rot_a(&stack_a, &stack_b, &info);
+		info.flag = 0;
 	}
-	return (0);
+	if (stack_a.top == 4)
+	{
+		sort_a_4memb(&stack_a, &stack_b, &info);
+	}
+	if (stack_a.top == 3)
+	{
+		sort_a_3memb(&stack_a, &stack_b, &info);
+	}
+	if (stack_a.top == 2)
+	{
+		sort_a_2memb(&stack_a, &stack_b, &info);
+	}
+	depletion_b(&stack_a, &stack_b, &info);
 }
+
+
+
+
+void	depletion_b(t_stack *stack_a, t_stack *stack_b, t_info *info)
+{
+	while (stack_b->top)
+		push_a(stack_a, stack_b, info);
+}
+
+
+void	def_median(t_stack *stack_a, t_info *info)
+{
+	int		tmp_arr[stack_a->top];
+	char	sorted;
+	int		i;
+	int		tmp;
+
+	i = 0;
+	while (i < stack_a->top)
+	{
+		tmp_arr[i] = stack_a->data[i];
+		i += 1;
+	}
+	sorted = 0;
+	while (!sorted)
+	{
+		i = 0;
+		sorted = 1;
+		while (i < stack_a->top - 1)
+		{
+			if (tmp_arr[i] > tmp_arr[i + 1])
+			{
+				tmp = tmp_arr[i];
+				tmp_arr[i] = tmp_arr[i + 1];
+				tmp_arr[i + 1] = tmp;
+				sorted = 0;
+			}
+			i += 1;
+		}
+	}
+	info->median = tmp_arr[(stack_a->top - 1) / 2];
+}
+
+
+
 
 void	def_index_maxb(t_stack *stack_b, t_info *info)
 {
@@ -130,6 +290,37 @@ void	def_index_maxb(t_stack *stack_b, t_info *info)
 		i += 1;
 	}
 }
+
+
+void	def_index_mina(t_stack *stack_a, t_info *info)
+{
+	int		i;
+	
+	info->ind_mina = 0;
+	i = 1;
+	while (i < stack_a->top)
+	{
+		if (stack_a->data[i] < stack_a->data[info->ind_mina])
+			info->ind_mina = i;
+		i += 1;
+	}
+}
+
+void	def_index_maxa(t_stack *stack_a, t_info *info)
+{
+	int		i;
+	
+	info->ind_maxa = 0;
+	i = 1;
+	while (i < stack_a->top)
+	{
+		if (stack_a->data[i] > stack_a->data[info->ind_maxa])
+			info->ind_maxa = i;
+		i += 1;
+	}
+}
+
+
 
 void	def_index_minb(t_stack *stack_b, t_info *info)
 {
@@ -224,30 +415,6 @@ void	def_threemin(t_stack *stack_a, t_info *info)
 		}
 		i += 1;
 	}
-}
-
-void	def_stacks(t_stack *stack_a, t_stack *stack_b, int argc, char **argv)
-{
-	int		i;
-	
-	if (!(stack_a->data = (int *)malloc(sizeof(int) * (argc - 1))))
-		exit(0);
-	if (!(stack_b->data = (int *)malloc(sizeof(int) * (argc - 1))))
-		exit(0);
-	i = 0;
-	while (i < argc - 1)
-	{
-		stack_a->data[i] = atoi(argv[i + 1]);
-		i += 1;
-	}
-	stack_a->top = i;
-	stack_b->top = 0;
-}
-
-void	def_info(t_info *info, int argc)
-{
-	info->argc = argc - 2;
-	info->count = 0;
 }
 
 
