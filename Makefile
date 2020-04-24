@@ -8,6 +8,7 @@ SRC_DIR = ./src/
 SRC_LIST =	push_swap.c\
 			def_data.c\
 			sort_stack_a.c\
+			sort_stack_b.c\
 			stack_actions.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_LIST))
 

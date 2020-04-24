@@ -26,195 +26,80 @@ int		main(int argc, char **argv)
 	def_stacks(&stack_a, &stack_b, argc, argv);
 	def_info(&info, argc);
 	put_stacks(&stack_a, &stack_b, &info);
-
-	// if (stack_a.top == 5)
-	// {
-	// 	sort_a_5memb(&stack_a, &stack_b, &info);
-	// 	exit(0);
-	// }
-	if (stack_a.top == 4)
-	{
-		sort_a_4memb(&stack_a, &stack_b, &info);
-		exit(0);
-	}
-	if (stack_a.top == 3)
-	{
-		sort_a_3memb(&stack_a, &stack_b, &info);
-		exit(0);
-	}
-	if (stack_a.top == 2)
-	{
-		sort_a_2memb(&stack_a, &stack_b, &info);
-		exit(0);
-	}
-	sort_a_1memb(&stack_a);
-
-	// if (stack_a.top < 4)
-	// {
-	// 	sortup_a(&stack_a, &stack_b, &info);
-	// 	return (0);
-	// }
-	// def_threemin(&stack_a, &info);
-
-	// def_median(&stack_a, &info);
-
-	// while (stack_a.top != 3)
-	// {
-	// 	fill_stack_b(&stack_a, &stack_b, &info);
-	// }
-	// sortup_a(&stack_a, &stack_b, &info);
-	// while (stack_b.top)
-	// {
-	// 	push_a(&stack_a, &stack_b, &info);
-	// }
-
-	// while (stack_a.top != 3)
-	// {
-	// 	if (stack_a.data[stack_a.top - 1] != info.threemin[0] &&
-	// 		stack_a.data[stack_a.top - 1] != info.threemin[1] &&
-	// 		stack_a.data[stack_a.top - 1] != info.threemin[2])
-	// 	{
-	// 		push_b(&stack_a, &stack_b, &info);
-
-	// 		if (stack_b.top == 1)
-	// 			continue ;
-	// 		if (stack_b.top == 2)
-	// 		{
-	// 			if (stack_b.data[0] < stack_b.data[1])
-	// 			{
-	// 				swap_b(&stack_a, &stack_b, &info); // rot_b rotr_b
-	// 				continue ;
-	// 			}
-	// 			continue ;
-	// 		}
-	// 		if (stack_b.top == 3)
-	// 		{
-	// 			def_index_maxb(&stack_b, &info);
-	// 			if (info.ind_maxb == stack_b.top - 1)
-	// 			{
-	// 				rot_b(&stack_a, &stack_b, &info);
-	// 				continue ;
-	// 			}
-	// 			if (stack_b.data[1] < stack_b.data[2])
-	// 			{
-	// 				swap_b(&stack_a, &stack_b, &info);
-	// 				continue ;
-	// 			}
-	// 		}
-	// 		if (stack_b.top > 3)
-	// 		{
-	// 			def_index_minb(&stack_b, &info);
-	// 			if (info.ind_minb[0] == stack_b.top - 1)
-	// 				continue ;
-	// 			if (info.ind_minb[1] == stack_b.top - 1)
-	// 			{
-	// 				swap_b(&stack_a, &stack_b, &info);
-	// 				continue ;
-	// 			}
-	// 			def_index_maxb(&stack_b, &info);
-	// 			if (info.ind_maxb == stack_b.top - 1)
-	// 			{
-	// 				rot_b(&stack_a, &stack_b, &info);
-	// 				continue ;
-	// 			}
-
-	// 			while (info.ind_minb[0] != stack_b.top - 1)
-	// 			{
-	// 				swap_b(&stack_a, &stack_b, &info);
-					
-	// 				def_index_minb(&stack_b, &info);
-	// 				if (info.ind_minb[1] == stack_b.top - 2)
-	// 					break ;
-
-	// 				push_a(&stack_a, &stack_b, &info);
-	// 				def_index_minb(&stack_b, &info);
-	// 			}
-	// 			continue ;
-
-	// 			// while (info.ind_maxb != stack_b.top - 1)
-	// 			// {
-	// 			// 	rotr_b(&stack_a, &stack_b, &info);
-	// 			// 	push_a(&stack_a, &stack_b, &info);
-	// 			// 	def_index_maxb(&stack_b, &info);
-	// 			// }
-	// 			// rot_b(&stack_a, &stack_b, &info);
-	// 			// continue ;
-	// 		}
-	// 	}
-	// 	rot_a(&stack_a, &stack_b, &info);
-	// }
-	// return (0);
-
-	info.flag = 1;
-	info.filllevel = 0;
 	
+	info.filltop_b = 0;
 	while (stack_a.top > 4)
 	{
 		def_median(&stack_a, &info);
-		info.filllevel += stack_a.top / 2;
-		while (stack_b.top < info.filllevel)
+		info.filltop_b += stack_a.top / 2;
+		while (stack_b.top < info.filltop_b)
 		{
+			// if (stack_a.data[stack_a.top - 2] > stack_a.data[stack_a.top - 1]) //MAYBE OPTIMIZE WITH CHANGES
+			// 	swap_a(&stack_a, &stack_b, &info);
+			// if (stack_a.data[stack_a.top - 1] <= info.median &&
+			// 	stack_a.data[stack_a.top - 2] <= info.median &&
+			// 	stack_a.data[stack_a.top - 2] > stack_a.data[stack_a.top - 1])
+			// 	swap_a(&stack_a, &stack_b, &info);
 			if (stack_a.data[stack_a.top - 1] > info.median)
 			{
 				push_b(&stack_a, &stack_b, &info);
 				if (stack_b.top == 1)
 					continue ;
-				if (stack_b.top == 2)
+
+
+				while (!check_sort_b(&stack_b))
 				{
-					if (stack_b.data[0] < stack_b.data[1])
+					if (stack_b.top == 2)
 					{
-						swap_b(&stack_a, &stack_b, &info); // rot_b rotr_b
-						continue ;
-					}
-					continue ;
-				}
-				if (stack_b.top == 3)
-				{
-					def_index_maxb(&stack_b, &info);
-					if (info.ind_maxb == stack_b.top - 1 && info.flag)
-					{
-						rot_b(&stack_a, &stack_b, &info);
-						continue ;
-					}
-					if (stack_b.data[1] < stack_b.data[2])
-					{
-						swap_b(&stack_a, &stack_b, &info);
-						continue ;
-					}
-				}
-				// if (stack_b.top > 3)
-				// {
-					def_index_minb(&stack_b, &info);
-					if (info.ind_minb[0] == stack_b.top - 1)
-						continue ;
-					if (info.ind_minb[1] == stack_b.top - 1)
-					{
-						swap_b(&stack_a, &stack_b, &info);
-						continue ;
-					}
-					def_index_maxb(&stack_b, &info);
-					if (info.ind_maxb == stack_b.top - 1 && info.flag)
-					{
-						rot_b(&stack_a, &stack_b, &info);
-						continue ;
+						sort_b_2memb(&stack_a, &stack_b, &info);
+						break ;
 					}
 
-					while (info.ind_minb[0] != stack_b.top - 1)
+					if (stack_b.top == 3)
 					{
-						swap_b(&stack_a, &stack_b, &info);
-						
-						def_index_minb(&stack_b, &info);
-						if (info.ind_minb[1] == stack_b.top - 2)
-							break ;
-						push_a(&stack_a, &stack_b, &info);
-						def_index_minb(&stack_b, &info);
+						sort_b_3memb(&stack_a, &stack_b, &info);
+						break ;
 					}
+
+					def_index_maxb(&stack_b, &info);
+					if (info.ind_maxb == stack_b.top - 1)
+					{
+						if (stack_a.data[stack_a.top - 1] <= info.median)
+						{
+							//OPTIM UP A BETWEEN LESS MEDIAN
+							if (stack_a.data[stack_a.top - 2] <= info.median &&
+								stack_a.data[stack_a.top - 2] > stack_a.data[stack_a.top - 1])
+								swap_a(&stack_a, &stack_b, &info);
+							//END OPTIM
+							rot_ab(&stack_a, &stack_b, &info);
+						}
+						else
+							rot_b(&stack_a, &stack_b, &info);
+						break ;
+					}
+
+					def_index_minb(&stack_b, &info);
+
+					if (info.ind_minb[1] == stack_b.top - 1)
+					{
+						if (stack_a.data[stack_a.top - 2] > stack_a.data[stack_a.top - 1])
+							swap_ab(&stack_a, &stack_b, &info);
+						else
+							swap_b(&stack_a, &stack_b, &info);
+						break ;
+					}
+
+					if (stack_a.data[stack_a.top - 2] > stack_a.data[stack_a.top - 1])
+						swap_ab(&stack_a, &stack_b, &info);
+					else
+						swap_b(&stack_a, &stack_b, &info);
+					push_a(&stack_a, &stack_b, &info);
 					continue ;
-				// }
+				}
+				continue ;
 			}
 			rot_a(&stack_a, &stack_b, &info);
 		}
-		info.flag = 0;
 	}
 	if (stack_a.top == 4)
 	{
@@ -232,7 +117,33 @@ int		main(int argc, char **argv)
 }
 
 
+char	check_sort_a(t_stack *stack_a)
+{
+	int		i;
 
+	i = 0;
+	while (i < stack_a->top - 1) // ?? top - 2
+	{
+		if (stack_a->data[i] > stack_a->data[i + 1])
+			return (0);
+		i += 1;
+	}
+	return (1);
+}
+
+char	check_sort_b(t_stack *stack_b)
+{
+	int		i;
+
+	i = 0;
+	while (i < stack_b->top - 1)
+	{
+		if (stack_b->data[i] < stack_b->data[i + 1])
+			return (0);
+		i += 1;
+	}
+	return (1);
+}
 
 void	depletion_b(t_stack *stack_a, t_stack *stack_b, t_info *info)
 {
@@ -326,7 +237,7 @@ void	def_index_minb(t_stack *stack_b, t_info *info)
 {
 	int		i;
 	
-	if (stack_b->data[stack_b->top - 1] < stack_b->data[stack_b->top - 2])
+	if (stack_b->data[0] < stack_b->data[1])
 	{
 		info->ind_minb[0] = 0;
 		info->ind_minb[1] = 1;
@@ -357,6 +268,7 @@ void	def_index_minb(t_stack *stack_b, t_info *info)
 		}
 		i += 1;
 	}
+	printf("%d %d\n", info->ind_minb[0], info->ind_minb[1]);
 }
 
 

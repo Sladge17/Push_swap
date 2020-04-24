@@ -38,6 +38,7 @@ typedef struct		s_info
 
 	int				ind_mina;
 	int				ind_maxa;
+	int				filltop_b;
 }					t_info;
 
 void	put_stacks(t_stack *stack_a, t_stack *stack_b, t_info *info);
@@ -48,6 +49,8 @@ void	def_median(t_stack *stack_a, t_info *info);
 void	def_index_maxb(t_stack *stack_b, t_info *info);
 void	def_index_minb(t_stack *stack_b, t_info *info);
 
+char	check_sort_a(t_stack *stack_a);
+char	check_sort_b(t_stack *stack_b);
 void	depletion_b(t_stack *stack_a, t_stack *stack_b, t_info *info);
 void	fill_stack_b(t_stack *stack_a, t_stack *stack_b, t_info *info);
 
@@ -69,6 +72,12 @@ void	sort_a_2memb(t_stack *stack_a, t_stack *stack_b, t_info *info);
 void	sort_a_3memb(t_stack *stack_a, t_stack *stack_b, t_info *info);
 void	sort_a_4memb(t_stack *stack_a, t_stack *stack_b, t_info *info);
 // void	sort_a_5memb(t_stack *stack_a, t_stack *stack_b, t_info *info);
+
+/*
+** sort_stack_b.c
+*/
+void	sort_b_2memb(t_stack *stack_a, t_stack *stack_b, t_info *info);
+void	sort_b_3memb(t_stack *stack_a, t_stack *stack_b, t_info *info);
 
 
 /*
