@@ -39,6 +39,7 @@ typedef struct		s_info
 	int				ind_mina;
 	int				ind_maxa;
 	int				filltop_b;
+	// int				noparall;
 }					t_info;
 
 void	put_stacks(t_stack *stack_a, t_stack *stack_b, t_info *info);

@@ -34,4 +34,5 @@ void	def_info(t_info *info, int argc)
 {
 	info->argc = argc - 2;
 	info->count = 0;
+	// info->noparall = 0;
 }
